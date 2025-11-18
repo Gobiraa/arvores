@@ -22,6 +22,26 @@ public class ABB<K extends Comparable<K>,V>{
             return pesquisarRec(chave, no.getEsq());
     }
     
+    public void inserir(K chave, V item){
+        raiz = inserirRec(chave, item, raiz);
+    }
+
+    public No<K,V> inserirRec(K chave, V item, No<K,V> no){
+        if(no==null){
+            no = new No<> (chave, item);
+        }
+        int comp = chave.compareTo(no.getChave());
+        if(comp < 0){
+            no.setEsq(inserirRec(chave, item, no.getEsq()));
+        }
+        else if(comp > 0){
+            no.setDir(inserirRec(chave, item, no.getDir()));
+        }
+        else{
+            System.out.println("Chaves iguais");
+        }
+        return no;
+    }
 
 
 }
