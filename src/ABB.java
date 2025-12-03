@@ -154,10 +154,10 @@ public class ABB<K extends Comparable<K>, V> {
 
     private String caminhamentoDecrescenteRec (No<K,V> no) {
         if (no!=null){
-            String resp = caminhamentoEmOrdemRec(no.getDir());
+            String resp = caminhamentoDecrescenteRec(no.getDir());
 
             resp += no.getItem() + "\n";
-            resp += caminhamentoEmOrdemRec(no.getEsq());
+            resp += caminhamentoDecrescenteRec(no.getEsq());
             return resp;
         }
         return "";
