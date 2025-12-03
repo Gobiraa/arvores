@@ -89,6 +89,80 @@ public class ABB<K extends Comparable<K>, V> {
             raizArvore = raizArvore.getEsq();
         }
         return raizArvore;
+    }   
+
+    public String caminhamentoPreOrdem() {
+        if (this.raiz == null) {
+            throw new RuntimeException("Arvore vazia");
+        }
+        return caminhamentoPreOrdemRec(this.raiz).trim();
     }
+
+    private String caminhamentoPreOrdemRec(No<K, V> no) {
+        if (no == null) return "";
+        String s = "";
+        V item = no.getItem();
+        if (item != null) {
+            s += item.toString() + " ";
+        }
+        s += caminhamentoPreOrdemRec(no.getEsq());
+        s += caminhamentoPreOrdemRec(no.getDir());
+        return s;
+    }
+
+    public String caminhamentoPosOrdem() {
+        if (this.raiz == null)
+            throw new RuntimeException("Arvore vazia");
+
+        return caminhamentoPosOrdemRec(this.raiz).trim();
+    }
+
+    private String caminhamentoPosOrdemRec(No<K,V> no) {
+        if (no == null) return "";
+        String s = "";
+        s += caminhamentoPosOrdemRec(no.getEsq());
+        s += caminhamentoPosOrdemRec(no.getDir());
+        V item = no.getItem();
+        if (item != null) {
+            s += item.toString() + " ";
+        }
+        return s;
+    }
+
+    public String caminhamentoEmOrdem(){
+        if(this.raiz == null)
+            throw new RuntimeException("Arvore vazia");
+        return caminhamentoEmOrdemRec(this.raiz);
+    }
+
+    private String caminhamentoEmOrdemRec (No<K,V> no) {
+        if (no!=null){
+            String resp = caminhamentoEmOrdemRec(no.getEsq());
+
+            resp += no.getItem() + "\n";
+            resp += caminhamentoEmOrdemRec(no.getDir());
+            return resp;
+        }
+        return "";
+    }
+
+    public String caminhamentoDecrescente(){
+        if(this.raiz == null)
+            throw new RuntimeException("Arvore vazia");
+        return caminhamentoDecrescenteRec(this.raiz);
+    }
+
+    private String caminhamentoDecrescenteRec (No<K,V> no) {
+        if (no!=null){
+            String resp = caminhamentoEmOrdemRec(no.getDir());
+
+            resp += no.getItem() + "\n";
+            resp += caminhamentoEmOrdemRec(no.getEsq());
+            return resp;
+        }
+        return "";
+    }
+
+
 
 }
