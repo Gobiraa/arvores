@@ -15,8 +15,8 @@ public class ABB<K extends Comparable<K>, V> {
 
     public V pesquisarRec(K chave, No<K, V> no) {
         if (no == null) {
-            return null; 
-        }else if (chave.equals(no.getChave())) {
+            return null;
+        } else if (chave.equals(no.getChave())) {
             return no.getItem();
         } else if (chave.compareTo(no.getChave()) > 0) {
             return pesquisarRec(chave, no.getDir());
@@ -79,17 +79,16 @@ public class ABB<K extends Comparable<K>, V> {
         return raizArvore;
     }
 
-    private No<K,V> antecessor(No<K,V> noRetirar, No<K,V> raizArvore){
-        if(raizArvore.getDir() != null){
+    private No<K, V> antecessor(No<K, V> noRetirar, No<K, V> raizArvore) {
+        if (raizArvore.getDir() != null) {
             raizArvore.setDir(antecessor(noRetirar, raizArvore.getDir()));
-        }
-        else{
+        } else {
             noRetirar.setChave(raizArvore.getChave());
             noRetirar.setItem(raizArvore.getItem());
             raizArvore = raizArvore.getEsq();
         }
         return raizArvore;
-    }   
+    }
 
     public String caminhamentoPreOrdem() {
         if (this.raiz == null) {
@@ -99,7 +98,9 @@ public class ABB<K extends Comparable<K>, V> {
     }
 
     private String caminhamentoPreOrdemRec(No<K, V> no) {
-        if (no == null) return "";
+        if (no == null) {
+            return "";
+        }
         String s = "";
         V item = no.getItem();
         if (item != null) {
@@ -111,14 +112,17 @@ public class ABB<K extends Comparable<K>, V> {
     }
 
     public String caminhamentoPosOrdem() {
-        if (this.raiz == null)
+        if (this.raiz == null) {
             throw new RuntimeException("Arvore vazia");
+        }
 
         return caminhamentoPosOrdemRec(this.raiz).trim();
     }
 
-    private String caminhamentoPosOrdemRec(No<K,V> no) {
-        if (no == null) return "";
+    private String caminhamentoPosOrdemRec(No<K, V> no) {
+        if (no == null) {
+            return "";
+        }
         String s = "";
         s += caminhamentoPosOrdemRec(no.getEsq());
         s += caminhamentoPosOrdemRec(no.getDir());
@@ -129,14 +133,15 @@ public class ABB<K extends Comparable<K>, V> {
         return s;
     }
 
-    public String caminhamentoEmOrdem(){
-        if(this.raiz == null)
+    public String caminhamentoEmOrdem() {
+        if (this.raiz == null) {
             throw new RuntimeException("Arvore vazia");
+        }
         return caminhamentoEmOrdemRec(this.raiz);
     }
 
-    private String caminhamentoEmOrdemRec (No<K,V> no) {
-        if (no!=null){
+    private String caminhamentoEmOrdemRec(No<K, V> no) {
+        if (no != null) {
             String resp = caminhamentoEmOrdemRec(no.getEsq());
 
             resp += no.getItem() + "\n";
@@ -146,14 +151,16 @@ public class ABB<K extends Comparable<K>, V> {
         return "";
     }
 
-    public String caminhamentoDecrescente(){
-        if(this.raiz == null)
+    //Imprimir em ordem decrescente
+    public String caminhamentoDecrescente() {
+        if (this.raiz == null) {
             throw new RuntimeException("Arvore vazia");
+        }
         return caminhamentoDecrescenteRec(this.raiz);
     }
 
-    private String caminhamentoDecrescenteRec (No<K,V> no) {
-        if (no!=null){
+    private String caminhamentoDecrescenteRec(No<K, V> no) {
+        if (no != null) {
             String resp = caminhamentoDecrescenteRec(no.getDir());
 
             resp += no.getItem() + "\n";
@@ -161,8 +168,21 @@ public class ABB<K extends Comparable<K>, V> {
             return resp;
         }
         return "";
+
+    }
+    // Obter menor valor
+    public V obterMenor(No<K,V> no) {
+        if(this.raiz==null) throw new RuntimeException("Arvore vazia");
+
+        while(no.getEsq() != null){
+            no = no.getEsq();
+        }
+
+        return no.getItem();
     }
 
-
+    //Clonar Árvore
+    public V
+    
 
 }

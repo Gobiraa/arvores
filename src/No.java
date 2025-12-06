@@ -45,5 +45,10 @@ public class No<K,V> {
         this.dir = dir;
     }
 
+    @Override
+    public No<K, V> clone(){
+        return new No<>(this.chave, this.item);
+    }
+
 
 }
