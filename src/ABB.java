@@ -1,11 +1,34 @@
 package src;
 
+import java.util.Comparator;
+
 public class ABB<K extends Comparable<K>, V> {
 
     No<K, V> raiz;
+    private Comparator<K> comparador;
+    private int tamanho;
 
     public ABB() {
         this.raiz = null;
+    }
+
+    private void init(Comparator<K> comparador) {
+        raiz = null;
+        tamanho = 0;
+
+        if (comparador == null) {
+            comparador = (Comparator<K>) Comparator.naturalOrder();
+        }
+
+        this.comparador = comparador;
+    }
+
+    public ABB(Comparator<K> comparador) {
+        init(comparador);
+    }
+
+    public Boolean vazia(){
+        return this.raiz == null;
     }
 
     //Pesquisa
@@ -170,11 +193,14 @@ public class ABB<K extends Comparable<K>, V> {
         return "";
 
     }
-    // Obter menor valor
-    public V obterMenor(No<K,V> no) {
-        if(this.raiz==null) throw new RuntimeException("Arvore vazia");
 
-        while(no.getEsq() != null){
+    // Obter menor valor
+    public V obterMenor(No<K, V> no) {
+        if (this.raiz == null) {
+            throw new RuntimeException("Arvore vazia");
+        }
+
+        while (no.getEsq() != null) {
             no = no.getEsq();
         }
 
@@ -182,7 +208,26 @@ public class ABB<K extends Comparable<K>, V> {
     }
 
     //Clonar Árvore
-    public V
-    
+    @Override
+    public ABB<K, V> clone() {
+        ABB<K, V> novaArvore = new ABB<>(this.comparador);
+        novaArvore.raiz = clonarSubArvore(this.raiz);
+        novaArvore.tamanho = this.tamanho;
+        return novaArvore;
+    }
+
+    private No<K, V> clonarSubArvore(No<K, V> no) {
+        if (no == null) {
+            return null;
+        }
+
+        No<K, V> novoNo = no.clone();
+
+        novoNo.setEsq(clonarSubArvore(no.getEsq()));
+        novoNo.setDir(clonarSubArvore(no.getDir()));
+
+        return novoNo;
+
+    }
 
 }
