@@ -12,6 +12,7 @@ public class ABB<K extends Comparable<K>, V> {
         this.raiz = null;
     }
 
+    @SuppressWarnings("unchecked")
     private void init(Comparator<K> comparador) {
         raiz = null;
         tamanho = 0;
@@ -27,7 +28,7 @@ public class ABB<K extends Comparable<K>, V> {
         init(comparador);
     }
 
-    public Boolean vazia(){
+    public Boolean vazia() {
         return this.raiz == null;
     }
 
@@ -102,6 +103,8 @@ public class ABB<K extends Comparable<K>, V> {
         return raizArvore;
     }
 
+
+    // Achar antecessor
     private No<K, V> antecessor(No<K, V> noRetirar, No<K, V> raizArvore) {
         if (raizArvore.getDir() != null) {
             raizArvore.setDir(antecessor(noRetirar, raizArvore.getDir()));
@@ -113,6 +116,7 @@ public class ABB<K extends Comparable<K>, V> {
         return raizArvore;
     }
 
+    // caminhamento pré-ordem
     public String caminhamentoPreOrdem() {
         if (this.raiz == null) {
             throw new RuntimeException("Arvore vazia");
@@ -134,6 +138,7 @@ public class ABB<K extends Comparable<K>, V> {
         return s;
     }
 
+    //caminhamento pos-ordem
     public String caminhamentoPosOrdem() {
         if (this.raiz == null) {
             throw new RuntimeException("Arvore vazia");
@@ -155,7 +160,7 @@ public class ABB<K extends Comparable<K>, V> {
         }
         return s;
     }
-
+    //caminhamento em ordem
     public String caminhamentoEmOrdem() {
         if (this.raiz == null) {
             throw new RuntimeException("Arvore vazia");
@@ -216,6 +221,8 @@ public class ABB<K extends Comparable<K>, V> {
         return novaArvore;
     }
 
+
+    //Clonar uma arvore em outra
     private No<K, V> clonarSubArvore(No<K, V> no) {
         if (no == null) {
             return null;
@@ -229,5 +236,8 @@ public class ABB<K extends Comparable<K>, V> {
         return novoNo;
 
     }
-
+    // Obter numeros maiores que a raiz
+    public ABB<K,V> obterSubconjuntoMaiores(K chave) {
+        return null;
+    }
 }
