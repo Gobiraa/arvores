@@ -1,6 +1,7 @@
 package src;
 
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class ABB<K extends Comparable<K>, V> {
 
@@ -236,8 +237,32 @@ public class ABB<K extends Comparable<K>, V> {
         return novoNo;
 
     }
+
     // Obter numeros maiores que a raiz
-    public ABB<K,V> obterSubconjuntoMaiores(K chave) {
-        return null;
+    private void obterSubMaiores(No<K,V> no, K chave, ABB<K,V> subconjunto){
+        if(no == null) return;
+
+        int comparacao = comparador.compare(no.getChave(), chave);
+
+        if (comparacao >= 0) {
+            subconjunto.inserir(no.getChave(), no.getItem());
+        }
+
+        if(comparacao < 0) {
+            obterSubMaiores(no.getDir(), chave, subconjunto);
+        } else {
+            obterSubMaiores(no.getEsq(), chave, subconjunto);
+        }
+    }
+
+    public ABB<K,V> obterSubMaioresRec(K chave) {
+        ABB<K,V> subconjunto = new ABB<>(this.comparador);
+        obterSubMaiores(this.raiz, chave, subconjunto);
+
+        if(subconjunto.vazia()){
+            throw new NoSuchElementException("Nenhum elemento maior encontrado");
+        }
+
+        return subconjunto;
     }
 }
