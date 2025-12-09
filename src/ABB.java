@@ -276,5 +276,49 @@ public class ABB<K extends Comparable<K>, V> {
             
     }
 
+        
+    //Capaz de recuperar e retornar o maior elemento na árvore binária de busca que seja menor do que a chave informada como parâmetro
+    private No<K,V> buscarAntecessor(No<K,V> raiz, K chave) {
+        No<K,V> atual = raiz;
+        No<K,V> antecessor = null;
+
+        while(atual != null) {
+            int comp = comparador.compare(chave, atual.getChave());
+
+            if(comp > 0) {
+                antecessor = atual;
+                atual = atual.getDir();
+            }
+            else if(comp < 0){
+                atual = atual.getEsq();
+            }
+            else{
+                if(atual.getEsq() != null){
+                    atual = atual.getEsq();
+
+                    while(atual.getDir() != null){
+                        atual = atual.getDir();
+                    }
+                    return atual;
+                }
+                return antecessor;
+            }
+        }
+        return null;
+    }
+
+    public V obterAntecessor(K chave) {
+        if(vazia()){
+            throw new IllegalStateException("Arvore vazia");
+        }
+
+        No<K,V> antecessor = buscarAntecessor(raiz, chave);
+
+        if(antecessor == null){
+            throw new NoSuchElementException("Não há antecessor maior que a chave");
+        }
+        return antecessor.getItem();
+    }
+
 
 }
