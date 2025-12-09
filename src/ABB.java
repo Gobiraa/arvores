@@ -265,4 +265,16 @@ public class ABB<K extends Comparable<K>, V> {
 
         return subconjunto;
     }
+
+    //Verifica se a chave informada é a raiz
+    public boolean ehRaizRec(K chave) {
+        if(vazia()){
+            throw new IllegalStateException("Arvore vazia");
+        }
+
+        return comparador.compare(chave, raiz.getChave()) == 0;
+            
+    }
+
+
 }
